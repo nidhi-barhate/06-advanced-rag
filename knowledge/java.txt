@@ -1,0 +1,9 @@
+Java is an object-oriented programming language.
+
+Java supports inheritance.
+
+Java Streams process collections efficiently.
+
+Generics improve type safety.
+
+JVM executes Java bytecode.

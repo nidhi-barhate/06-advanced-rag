@@ -1,0 +1,3 @@
+from repository.knowledge_repository import KnowledgeRepository
+
+knowledge_repository = KnowledgeRepository()

@@ -1,0 +1,7 @@
+Spring Boot simplifies Java development.
+
+Dependency Injection is a core feature.
+
+Spring MVC handles web applications.
+
+Spring Data provides repository abstraction.
