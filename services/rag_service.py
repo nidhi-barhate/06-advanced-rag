@@ -6,11 +6,8 @@ from services.llm_service import LLMService
 class RAGService:
 
     def __init__(self):
-
         self.retrieval_service = RetrievalService()
-
         self.prompt_builder = PromptBuilderService()
-
         self.llm_service = LLMService()
 
     def ask(self, question: str):

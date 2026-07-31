@@ -1,3 +1,3 @@
-from repository.knowledge_repository import KnowledgeRepository
+from repository.vector_repository import VectorRepository
 
-knowledge_repository = KnowledgeRepository()
+knowledge_repository = VectorRepository()

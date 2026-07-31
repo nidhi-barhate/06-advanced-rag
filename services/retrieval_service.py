@@ -1,32 +1,22 @@
-from config.repository_config import knowledge_repository
 from schemas.search_result import SearchResult
 from services.embedding_service import EmbeddingService
 from utils.similarity import Similarity
-
+from config.repository_config import knowledge_repository
 
 class RetrievalService:
-
     def __init__(self):
         self.embedding_service = EmbeddingService()
-        self.repository = knowledge_repository
+        self.vector_repository = knowledge_repository
 
     def retrieve(self, question: str, top_k: int = 3):
         query_embedding = self.embedding_service.generate(question)
         results = []
-        for chunk in self.repository.find_all():
-            score = Similarity.cosine(
-                query_embedding,
-                chunk.embedding
-            )
-            results.append((score, chunk))
-        results.sort(
-            key=lambda item: item[0],
-            reverse=True
+        results = self.vector_repository.search(
+            query_embedding=query_embedding,
+            top_k=top_k
         )
-
         search_results = []
-        for score, chunk in results[:top_k]:
-
+        for score, chunk in results:
             search_results.append(
                 SearchResult(
                     document_name=chunk.document_name,

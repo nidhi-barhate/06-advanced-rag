@@ -7,42 +7,69 @@ from services.embedding_service import EmbeddingService
 
 
 class KnowledgeService:
-
     def __init__(self):
         self.chunk_service = ChunkService()
         self.embedding_service = EmbeddingService()
-        self.repository = knowledge_repository
+        self.vector_repository = knowledge_repository
         self.chunk_id = 1
 
     def load_knowledge_base(self, folder_path: str) -> int:
-        self.repository.clear()
+        self.vector_repository.clear()
         self.chunk_id = 1
-
         folder = Path(folder_path)
-
         for file in folder.glob("*.txt"):
             self.load_document(file)
-
-        return len(self.repository.find_all())
+        return self.vector_repository.size()
 
     def load_document(self, file_path: Path) -> None:
-
         text = file_path.read_text(encoding="utf-8")
-
         chunks = self.chunk_service.split(text)
-
+        topic = self.get_topic(file_path.name)
+        category = self.get_category(file_path.name)
+        language = "English"
         for index, chunk_text in enumerate(chunks, start=1):
-
             embedding = self.embedding_service.generate(chunk_text)
-
             chunk = Chunk(
                 id=self.chunk_id,
                 document_name=file_path.name,
                 chunk_index=index,
+                topic=topic,
+                category=category,
+                language=language,
                 text=chunk_text,
                 embedding=embedding
             )
-
-            self.repository.save(chunk)
-
+            self.vector_repository.add(chunk)
             self.chunk_id += 1
+
+    def get_topic(self, file_name: str) -> str:
+        name = file_name.lower()
+        if "aws" in name:
+            return "AWS"
+
+        if "spring" in name:
+            return "Spring"
+
+        if "java" in name:
+            return "Java"
+
+        if "docker" in name:
+            return "Docker"
+
+        return "General"        
+
+    def get_category(self, file_name: str) -> str:
+        name = file_name.lower()
+        if "aws" in name:
+            return "Cloud"
+
+        if "spring" in name:
+            return "Backend"
+
+        if "java" in name:
+            return "Programming"
+
+        if "docker" in name:
+            return "DevOps"
+
+        return "General"
