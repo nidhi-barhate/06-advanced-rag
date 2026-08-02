@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from services.knowledge_service import KnowledgeService
+from config.repository_config import knowledge_repository
 from schemas.search_request import SearchRequest
 from services.retrieval_service import RetrievalService
 from services.rag_service import RAGService
@@ -18,6 +19,10 @@ def load_knowledge():
         "message": "Knowledge base loaded successfully.",
         "total_chunks": total_chunks
     }
+
+@router.get("/api/knowledge/chunks")
+def get_chunks():
+    return knowledge_repository.find_all()
 
 @router.post("/api/knowledge/search")
 def search(request: SearchRequest):

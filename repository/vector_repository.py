@@ -106,3 +106,6 @@ class VectorRepository:
             return 0
 
         return self.index.ntotal
+
+    def find_all(self) -> list[Chunk]:
+        return list(self.chunk_map.values())
