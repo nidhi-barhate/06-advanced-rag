@@ -45,10 +45,8 @@ class RetrievalService:
             key=lambda result: result.score,
             reverse=True
         )
-        print(f"Final results before reranking: {[result.document_name for result in final_results]}")
         search_results = self.rerank_service.rerank(
             question,
             final_results
         )
-        print(f"Final results after reranking: {[result.document_name for result in search_results]}")
         return search_results

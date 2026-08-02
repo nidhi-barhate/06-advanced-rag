@@ -4,25 +4,33 @@ from config.repository_config import knowledge_repository
 from models.chunk import Chunk
 from services.chunk_service import ChunkService
 from services.embedding_service import EmbeddingService
-
+from services.document_loader_service import DocumentLoaderService
 
 class KnowledgeService:
     def __init__(self):
         self.chunk_service = ChunkService()
         self.embedding_service = EmbeddingService()
         self.vector_repository = knowledge_repository
+        self.document_loader = DocumentLoaderService()
         self.chunk_id = 1
 
     def load_knowledge_base(self, folder_path: str) -> int:
         self.vector_repository.clear()
         self.chunk_id = 1
         folder = Path(folder_path)
-        for file in folder.glob("*.txt"):
+        for file in folder.iterdir():
+            if file.suffix.lower() not in [
+                ".txt",
+                ".pdf"
+            ]:
+                continue
             self.load_document(file)
         return self.vector_repository.size()
 
     def load_document(self, file_path: Path) -> None:
-        text = file_path.read_text(encoding="utf-8")
+        text = self.document_loader.load(
+            file_path
+        )
         chunks = self.chunk_service.split(text)
         topic = self.get_topic(file_path.name)
         category = self.get_category(file_path.name)

@@ -31,4 +31,10 @@ class ReRankService:
             key=lambda item: item.score,
             reverse=True
         )
-        return search_results
+        MIN_SCORE = 5
+        results = [
+            result
+            for result in search_results
+            if result.score >= MIN_SCORE
+        ]
+        return results
