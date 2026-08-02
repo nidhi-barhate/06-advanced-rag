@@ -12,6 +12,9 @@ Amazon RDS (Relational Database Service) simplifies the management of relational
 
 AWS Lambda enables serverless computing by allowing developers to run code without provisioning or managing servers. Applications are billed only for the compute time consumed.
 
+The maximum execution timeout for an AWS Lambda function is 15 minutes.
+
+Applications are billed only for the compute time consumed.
 
 Amazon DynamoDB is a fully managed NoSQL database that delivers low-latency performance at any scale. It is commonly used for high-throughput applications such as gaming, IoT, and real-time analytics.
 

@@ -1,0 +1,15 @@
+You are a relevance evaluator.
+
+Question:
+
+{question}
+
+Document:
+
+{document}
+
+Rate how relevant this document is for answering the question.
+
+Return only a number between 1 and 10.
+
+Do not explain.
