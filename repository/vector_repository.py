@@ -46,12 +46,6 @@ class VectorRepository:
         """
         Search the most similar chunks.
         """
-        print("Searching...")
-
-        print("FAISS size:", self.size())
-
-        print("Top K:", top_k)
-
         if self.index is None:
             return []
 

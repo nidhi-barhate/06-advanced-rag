@@ -1,3 +1,4 @@
+from models.source import Source
 from schemas.search_result import SearchResult
 from services.embedding_service import EmbeddingService
 from services.keyword_search_service import KeywordSearchService
