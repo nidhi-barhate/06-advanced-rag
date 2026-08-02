@@ -35,7 +35,7 @@ class OllamaClient:
             timeout=60
         )
         response.raise_for_status()
-        print("Status Code:", response.status_code)
-        print("Response JSON:")
-        print(response.json())
+        # print("Status Code:", response.status_code)
+        # print("Response JSON:")
+        # print(response.json())
         return response.json()["message"]["content"]

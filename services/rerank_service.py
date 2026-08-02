@@ -21,12 +21,7 @@ class ReRankService:
             try:
                 result.score = float(response.strip())
             except ValueError:
-                result.score = 0
-            print("=" * 60)
-            print("Question:", question)
-            print("Document:", result.document_name)
-            print("LLM Score:", result.score)    
-            
+                result.score = 0 
         search_results.sort(
             key=lambda item: item.score,
             reverse=True

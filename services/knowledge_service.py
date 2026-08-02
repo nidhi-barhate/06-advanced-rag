@@ -1,21 +1,26 @@
 from pathlib import Path
 
+from sqlalchemy.orm import Session
+
 from config.repository_config import knowledge_repository
 from models.chunk import Chunk
+from repository.message_repository import MessageRepository
 from services.chunk_service import ChunkService
 from services.embedding_service import EmbeddingService
 from services.document_loader_service import DocumentLoaderService
 
 class KnowledgeService:
-    def __init__(self):
+    def __init__(self,db: Session):
         self.chunk_service = ChunkService()
         self.embedding_service = EmbeddingService()
         self.vector_repository = knowledge_repository
         self.document_loader = DocumentLoaderService()
+        self.message_repository = MessageRepository(db)
         self.chunk_id = 1
 
     def load_knowledge_base(self, folder_path: str) -> int:
         self.vector_repository.clear()
+        self.message_repository.delete_all()
         self.chunk_id = 1
         folder = Path(folder_path)
         for file in folder.iterdir():

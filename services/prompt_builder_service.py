@@ -51,3 +51,25 @@ class PromptBuilderService:
             document
         )
         return prompt
+
+    def build_query_rewrite_prompt(
+            self,
+            history: str,
+            question: str
+    ) -> str:
+        prompt = Path(
+            "prompts/query_rewrite.txt"
+        ).read_text(
+            encoding="utf-8"
+        )
+
+        prompt = prompt.replace(
+            "{history}",
+            history
+        )
+
+        prompt = prompt.replace(
+            "{question}",
+            question
+        )
+        return prompt

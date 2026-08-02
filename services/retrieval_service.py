@@ -1,13 +1,18 @@
+from requests import Session
+
+from models.chat_model import Message
 from models.source import Source
 from schemas.search_result import SearchResult
 from services.embedding_service import EmbeddingService
 from services.keyword_search_service import KeywordSearchService
-from utils.similarity import Similarity
+from services.query_rewrite_service import QueryRewriteService
 from config.repository_config import knowledge_repository
 from services.rerank_service import ReRankService
+from repository.message_repository import MessageRepository
+from sqlalchemy.orm import Session
 
 class RetrievalService:
-    def __init__(self):
+    def __init__(self, db: Session):
         self.embedding_service = EmbeddingService()
         self.vector_repository = knowledge_repository
         self.keyword_search_service = KeywordSearchService()
